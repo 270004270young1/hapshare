@@ -14,20 +14,20 @@
 
 //     await server.start()
 //     server.applyMiddleware({app})
-    
+
 // }
 
 //     const app = express()
 //     const pubsub = new PubSub();
 //     const httpServer = createServer(app)
-    
+
 //     require('dotenv').config();
-    
-    
+
+
 //     const schema = makeExecutableSchema({typeDefs,resolvers,context:({req})=>({req,pubsub})})
-    
-    
-    
+
+
+
 //     const server = new ApolloServer({
 //         schema,
 //         plugins:[{
@@ -42,7 +42,7 @@
 //     })
 //     serverSetup()
 
-    
+
 //     const subscriptionServer = SubscriptionServer.create({
 //         schema,
 //         execute,
@@ -51,44 +51,44 @@
 //         server:httpServer,
 //         path:server.graphqlPath,
 //     })
-    
-    
+
+
 //     httpServer.listen(5000,()=>{
 //         console.log('Server is running')
 //     })
-    
+
 //     mongoose.connect(process.env.DATABASE_URL,()=>{
 //         console.log('Connect to db')
 //     })
 
-    /*-----------------------------------------------------------*/
-const {ApolloServer} = require("apollo-server")
-const {PubSub} = require('graphql-subscriptions')
+/*-----------------------------------------------------------*/
+const { ApolloServer } = require("apollo-server")
+
 const mongoose = require('mongoose');
 const resolvers = require('./graphql/resolvers')
 const typeDefs = require('./graphql/typeDefs')
 
 require('dotenv').config();
-const pubsub = new PubSub();
+const PORT = process.env.PORT || 5000
 const server = new ApolloServer({
-        typeDefs,
-        resolvers,
-        context:({req})=>({req,pubsub}),
-        formatError:(err)=>{
-           
-            return err
-        }
-    })
-        
-    mongoose.connect(process.env.DATABASE_URL,()=>{
+    typeDefs,
+    resolvers,
+    context: ({ req }) => ({ req, pubsub }),
+    formatError: (err) => {
 
-        console.log('Connect to db')
+        return err
+    }
+})
 
-    })
-            
-    server.listen({port:5000})
-        .then((res)=>{
+mongoose.connect(process.env.DATABASE_URL, () => {
 
-            console.log(`Server is running at ${res.url}`)
-        }
+    console.log('Connect to db')
+
+})
+
+server.listen({ port: PORT })
+    .then((res) => {
+
+        console.log(`Server is running at ${res.url}`)
+    }
     )
