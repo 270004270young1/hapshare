@@ -73,7 +73,7 @@ const PORT = process.env.PORT || 5000
 const server = new ApolloServer({
     typeDefs,
     resolvers,
-    context: ({ req }) => ({ req, pubsub }),
+    context: ({ req }) => ({ req}),
     formatError: (err) => {
 
         return err
